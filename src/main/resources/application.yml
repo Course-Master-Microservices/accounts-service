@@ -1,6 +1,13 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: accounts
+    name: "accounts"
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -14,8 +21,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
 
-server:
-  port: 8080
-
-
+# Actuator configuration
+# This configuration enables the actuator endpoints for monitoring and management.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
